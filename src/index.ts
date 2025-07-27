@@ -13,7 +13,7 @@
  */
 
 export default {
-  async fetch(request): Promise<Response> {
+  async fetch(request) {
     // End with new-line character to keep terminal results clean.
     return new Response(`${request.headers.get("CF-Connecting-IP")}\n`, {
       headers: { "Cache-Control": "no-store" },
