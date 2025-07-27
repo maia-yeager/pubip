@@ -5,14 +5,18 @@
  * - Open a browser tab at http://localhost:8787/ to see your worker in action
  * - Run `npm run deploy` to publish your worker
  *
- * Bind resources to your worker in `wrangler.jsonc`. After adding bindings, a type definition for the
+ * Bind resources to your worker in `wrangler.jsonc`. After adding bindings, a
+ * type definition for the
  * `Env` object can be regenerated with `npm run cf-typegen`.
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
-	},
-} satisfies ExportedHandler<Env>;
+  async fetch(request): Promise<Response> {
+    // End with new-line character to keep terminal results clean.
+    return new Response(`${request.headers.get("CF-Connecting-IP")}\n`, {
+      headers: { "Cache-Control": "no-store" },
+    })
+  },
+} satisfies ExportedHandler<Env>
